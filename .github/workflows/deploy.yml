@@ -11,6 +11,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Debug:Check AWS_S3_BUCKET value
+        run: |
+          if [ -z "$AWS_S3_BUCKET" ]; then
+            echo "❌ AWS_S3_BUCKET is empty"
+          else
+            echo "✅ AWS_S3_BUCKET is set to: $AWS_S3_BUCKET"
+            echo "Length: ${#AWS_S3_BUCKET}"
+          fi
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+
       - name: Upload to S3
         run: |
           echo "Uploading to bucket: $AWS_S3_BUCKET"
